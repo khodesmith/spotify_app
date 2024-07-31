@@ -18,7 +18,10 @@ class BasicAppButton extends StatelessWidget {
         minimumSize: Size.fromHeight(height ?? 80),
       ),
       onPressed: onPressed,
-      child: Text(buttonText),
+      child: Text(
+        buttonText,
+        style: const TextStyle(color: Colors.white),
+      ),
     );
   }
 }

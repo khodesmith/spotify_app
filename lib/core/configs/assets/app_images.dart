@@ -3,4 +3,5 @@ class AppImages {
   static const String format = '.png';
 
   static const String introBackground = '${basePath}intro_background$format';
+  static const String chooseModeBackground = '${basePath}dua_lipa$format';
 }
