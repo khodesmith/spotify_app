@@ -1,13 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify_app/common/widgets/button/basic_app_button.dart';
 import 'package:spotify_app/core/configs/assets/app_images.dart';
 import 'package:spotify_app/core/configs/assets/app_vectors.dart';
+import 'package:spotify_app/presentation/choose_mode/bloc/theme_cubit.dart';
 
 class ChooseModePage extends StatelessWidget {
-  const ChooseModePage({super.key});
-
+  ChooseModePage({super.key});
+  final themeCubitOb = ThemeCubit();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -60,16 +63,24 @@ class ChooseModePage extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        Container(
-                          width: 73,
-                          height: 73,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF3B3538),
-                          ),
-                          child: SvgPicture.asset(
-                            AppVectors.moon,
-                            fit: BoxFit.none,
+                        GestureDetector(
+                          onTap: () {
+                            themeCubitOb.updateTheme(ThemeMode.dark);
+                            // context
+                            //     .read<ThemeCubit>()
+                            //     .updateTheme(ThemeMode.dark);
+                          },
+                          child: Container(
+                            width: 73,
+                            height: 73,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFF3B3538),
+                            ),
+                            child: SvgPicture.asset(
+                              AppVectors.moon,
+                              fit: BoxFit.none,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 17),
@@ -87,16 +98,23 @@ class ChooseModePage extends StatelessWidget {
                     const SizedBox(width: 40),
                     Column(
                       children: [
-                        Container(
-                          width: 73,
-                          height: 73,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFF30393D),
-                          ),
-                          child: SvgPicture.asset(
-                            AppVectors.sun,
-                            fit: BoxFit.none,
+                        GestureDetector(
+                          onTap: () {
+                            context
+                                .read<ThemeCubit>()
+                                .updateTheme(ThemeMode.light);
+                          },
+                          child: Container(
+                            width: 73,
+                            height: 73,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xFF30393D),
+                            ),
+                            child: SvgPicture.asset(
+                              AppVectors.sun,
+                              fit: BoxFit.none,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 17),
