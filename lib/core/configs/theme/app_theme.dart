@@ -10,8 +10,9 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.kPrimaryColor,
+        elevation: 0,
         textStyle: const TextStyle(
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
         shape: RoundedRectangleBorder(
@@ -29,7 +30,11 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.kPrimaryColor,
-        textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        elevation: 0,
+        textStyle: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),

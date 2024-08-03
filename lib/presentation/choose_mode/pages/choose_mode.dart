@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify_app/common/widgets/button/basic_app_button.dart';
 import 'package:spotify_app/core/configs/assets/app_images.dart';
 import 'package:spotify_app/core/configs/assets/app_vectors.dart';
+import 'package:spotify_app/presentation/auth/pages/signup_or_signin.dart';
 import 'package:spotify_app/presentation/choose_mode/bloc/theme_cubit.dart';
 
 class ChooseModePage extends StatelessWidget {
@@ -132,7 +133,16 @@ class ChooseModePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 70),
-                BasicAppButton(onPressed: () {}, buttonText: 'Continue'),
+                BasicAppButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignupOrSigninPage(),
+                        ),
+                      );
+                    },
+                    buttonText: 'Continue'),
               ],
             ),
           )
