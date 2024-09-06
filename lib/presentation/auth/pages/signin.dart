@@ -5,10 +5,17 @@ import 'package:spotify_app/common/widgets/appbar/app_bar.dart';
 import 'package:spotify_app/common/widgets/button/basic_app_button.dart';
 import 'package:spotify_app/core/configs/assets/app_vectors.dart';
 import 'package:spotify_app/core/configs/theme/app_colors.dart';
+import 'package:spotify_app/core/usecases/auth/singin_usecase.dart';
+import 'package:spotify_app/data/models/auth/signin_user_req.dart';
 import 'package:spotify_app/presentation/auth/pages/signup.dart';
+import 'package:spotify_app/presentation/root/pages/root.dart';
+import 'package:spotify_app/service_locator.dart';
 
 class SigninScreen extends StatelessWidget {
-  const SigninScreen({super.key});
+  SigninScreen({super.key});
+
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,96 +35,120 @@ class SigninScreen extends StatelessWidget {
           vertical: 50,
           horizontal: 30,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              textAlign: TextAlign.center,
-              'Register',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'If you need any support',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300,
-                  ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                textAlign: TextAlign.center,
+                'Sign In',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
                 ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Click here',
+              ),
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'If you need any support',
                     style: TextStyle(
-                      color: AppColors.kPrimaryColor,
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
                     ),
                   ),
-                )
-              ],
-            ),
-            const SizedBox(height: 20),
-            _fullNameField(context),
-            const SizedBox(height: 16),
-            _passwordField(context),
-            const SizedBox(height: 20),
-            _recoveryText(),
-            const SizedBox(height: 31),
-            BasicAppButton(
-              onPressed: () {},
-              buttonText: 'Sign In',
-            ),
-            const SizedBox(height: 31),
-            const Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Divider(
-                    color: Colors.grey,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'Or',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  flex: 1,
-                  child: Divider(
-                    thickness: 1,
-                    color: Colors.grey,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      print('Azeez');
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Click here',
+                      style: TextStyle(
+                        color: AppColors.kPrimaryColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 20),
+              _fullNameField(context),
+              const SizedBox(height: 16),
+              _passwordField(context),
+              const SizedBox(height: 20),
+              _recoveryText(),
+              const SizedBox(height: 31),
+              BasicAppButton(
+                onPressed: () async {
+                  var result = await sl<SigninUseCase>().call(
+                    params: SigninUserReq(
+                      email: _email.text.toString(),
+                      password: _password.text.toString(),
+                    ),
+                  );
+                  result.fold(
+                    (l) {
+                      var snackBar = SnackBar(content: Text(l));
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     },
-                    icon: SvgPicture.asset(AppVectors.google)),
-                IconButton(
-                    onPressed: () {
-                      print('apple');
+                    (r) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RootPage(),
+                          ),
+                          (route) => false);
                     },
-                    icon: SvgPicture.asset(AppVectors.apple))
-              ],
-            )
-          ],
+                  );
+                },
+                buttonText: 'Sign In',
+              ),
+              const SizedBox(height: 31),
+              const Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Divider(
+                      color: Colors.grey,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    'Or',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Expanded(
+                    flex: 1,
+                    child: Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        print('Azeez');
+                      },
+                      icon: SvgPicture.asset(AppVectors.google)),
+                  IconButton(
+                      onPressed: () {
+                        print('apple');
+                      },
+                      icon: SvgPicture.asset(AppVectors.apple))
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -130,6 +161,7 @@ class SigninScreen extends StatelessWidget {
       ).applyDefaults(
         Theme.of(context).inputDecorationTheme,
       ),
+      controller: _email,
     );
   }
 
@@ -140,6 +172,7 @@ class SigninScreen extends StatelessWidget {
       ).applyDefaults(
         Theme.of(context).inputDecorationTheme,
       ),
+      controller: _password,
     );
   }
 
@@ -176,7 +209,7 @@ class SigninScreen extends StatelessWidget {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const SignupScreen(),
+                  builder: (context) => SignupScreen(),
                 ));
           },
           child: const Text(
