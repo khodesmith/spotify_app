@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:spotify_app/common/widgets/appbar/app_bar.dart';
@@ -33,7 +32,7 @@ class SigninScreen extends StatelessWidget {
           children: [
             const Text(
               textAlign: TextAlign.center,
-              'Register',
+              'Log In',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
