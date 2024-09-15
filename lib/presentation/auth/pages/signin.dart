@@ -4,10 +4,17 @@ import 'package:spotify_app/common/widgets/appbar/app_bar.dart';
 import 'package:spotify_app/common/widgets/button/basic_app_button.dart';
 import 'package:spotify_app/core/configs/assets/app_vectors.dart';
 import 'package:spotify_app/core/configs/theme/app_colors.dart';
+import 'package:spotify_app/core/usecases/auth/singin_usecase.dart';
+import 'package:spotify_app/data/models/auth/signin_user_req.dart';
 import 'package:spotify_app/presentation/auth/pages/signup.dart';
+import 'package:spotify_app/presentation/root/pages/root.dart';
+import 'package:spotify_app/service_locator.dart';
 
 class SigninScreen extends StatelessWidget {
-  const SigninScreen({super.key});
+  SigninScreen({super.key});
+
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +39,7 @@ class SigninScreen extends StatelessWidget {
           children: [
             const Text(
               textAlign: TextAlign.center,
-              'Log In',
+              'Register',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -129,6 +136,7 @@ class SigninScreen extends StatelessWidget {
       ).applyDefaults(
         Theme.of(context).inputDecorationTheme,
       ),
+      controller: _email,
     );
   }
 
@@ -139,6 +147,7 @@ class SigninScreen extends StatelessWidget {
       ).applyDefaults(
         Theme.of(context).inputDecorationTheme,
       ),
+      controller: _password,
     );
   }
 
@@ -175,7 +184,7 @@ class SigninScreen extends StatelessWidget {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const SignupScreen(),
+                  builder: (context) => SignupScreen(),
                 ));
           },
           child: const Text(
